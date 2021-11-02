@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sliding_up_panel: ^2.0.0+1
   http: ^0.13.4
+  font_awesome_flutter: ^9.2.0
 
 
 dev_dependencies:
@@ -59,6 +60,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

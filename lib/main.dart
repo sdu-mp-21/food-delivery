@@ -1,3 +1,4 @@
+import 'package:delivery_app/screens/details_screen.dart';
 import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/restaurant_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: RestaurantDetailsScreen(),
+      home: DetailScreen(),
     );
   }
 }
