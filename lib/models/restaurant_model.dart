@@ -7,27 +7,53 @@ class Restaurant{
   String name;
   double rating;
   String imageUrl;
+  List<Schedule> scheduleList;
  // List<MenuItem> menuItems;
 
-  Restaurant(this.id, this.name, this.rating, this.imageUrl);
+  Restaurant({
+    required this.id,
+    required this.name,
+    required this.rating,
+    required this.imageUrl,
+    required this.scheduleList
+  });
 
-  Restaurant.fromJson(Map json)
+  factory Restaurant.fromJson(Map<String, dynamic> json){
+    var list = json['schedule_set'] as List;
+    //print(list[);
+    List<Schedule> _scheduleList = list.map((schedule) => Schedule.fromJson(schedule)).toList();
+    return Restaurant(
+        id : json["id"] as int,
+        name : json["title"] as String,
+        rating : json["rating"] as double,
+        imageUrl : json["image"] as String,
+        scheduleList : _scheduleList,
+    );
+  }
+}
 
-      : id = json['id'],
-        name = json['title'],
-        rating = json['rating'],
-        imageUrl = json['image'];
-        //menuItems = json['food_set'];
+class Schedule{
+  int id;
+  String start_weekday;
+  String end_weekday;
+  String started_at;
+  String ended_at;
 
-//   factory Restaurant.fromJson(Map<String, dynamic> parsedJson){
-//     //var list = parsedJson['food_set'] as List;
-//    // List<MenuItem> menuList = list.map((i) => MenuItem.fromJson(i)).toList();
-//     return Restaurant(
-//         id: parsedJson['id'],
-//         name: parsedJson['title'],
-//         rating: parsedJson['rating'],
-//         imageUrl: parsedJson['image']
-// //        menuItems: menuList
-//     );
-//  }
+  Schedule({
+    required this.id,
+    required this.start_weekday,
+    required this.started_at,
+    required this.end_weekday,
+    required this.ended_at
+  });
+
+  factory Schedule.fromJson(Map<String, dynamic> json){
+    return Schedule(
+        id: json["id"] as int,
+        start_weekday: json["start_weekday"] as String,
+        started_at: json["started_at"] as String,
+        end_weekday: json["end_weekday"] as String,
+        ended_at: json["ended_at"] as String);
+  }
+
 }

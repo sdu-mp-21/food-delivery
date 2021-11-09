@@ -8,18 +8,23 @@ class NetworkHelper {
 
   final String url; //https://fast-cliffs-74827.herokuapp.com/api/restaurants
 
-  // Future<List<Restaurant>> getRestaurant() async{
-  //   var response = await http.get(Uri.parse(url));
-  //   List<Restaurant> restaurantList = [];
-  //   if(response.statusCode ==200){
-  //     var restaurantsJson = json.decode(response.body);
-  //     for(var restaurantJson in restaurantsJson){
-  //       restaurantList.add(Restaurant.fromJson(restaurantJson));
-  //     }
-  //   }
-  //   return restaurantList;
-  //
-  // }
+  Future<List<Restaurant>> getRestaurant() async{
+    var response = await http.get(Uri.parse(url));
+
+    if(response.statusCode ==200){
+      List<Restaurant> restaurantList=[];
+      //Iterable<dynamic> l = json.decode(response.body);
+      //List<Restaurant> restaurantList = List<Restaurant>.from(l.map((model)=> Restaurant.fromJson(model))).toList();
+      var restaurantsJson = json.decode(response.body);
+       for(var restaurantJson in restaurantsJson){
+         restaurantList.add(Restaurant.fromJson(restaurantJson));
+       }
+      //List<Restaurant> restaurantList = List.generate(restaurantsJson.length, (i) => Restaurant.fromJson(restaurantsJson[i]));
+      return restaurantList;
+    }else{
+      throw Exception('Failed to load restaurant');
+    }
+  }
 
   Future<List<MenuItem>> getMenu() async{
     var response = await http.get(Uri.parse(url));
