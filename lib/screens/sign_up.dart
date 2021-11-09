@@ -36,19 +36,21 @@ Size size = MediaQuery.of(context).size;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: [ 
+           SizedBox(height: size.height * 0.02),
            Positioned(
             child: Text(
-              "SIGN UP",
-              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green),
+              "Sign up",
+              style: TextStyle(color: Colors.blue,fontSize: 20),
             ),
-          ),
+          ),      
              Positioned(
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/food.png',
                     width: double.infinity,
+                    height:150,
                   )
-                ), 
+                ),    
         Container(
           width:size.width,
           child: Column(
@@ -132,14 +134,7 @@ Size size = MediaQuery.of(context).size;
                 borderRadius: BorderRadius.circular(20),
                 child: OutlinedButton(
                   onPressed: (){
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SignIn();
-                        },
-                      ),
-                  );  
+                     
                   }, 
                   child: Text('Sign up',
                   style: TextStyle(color: Colors.white),),
@@ -162,7 +157,14 @@ Size size = MediaQuery.of(context).size;
                 borderRadius: BorderRadius.circular(20),
                 child: OutlinedButton(
                   onPressed: (){
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignIn();
+                        },
+                      ),
+                  );  
                   }, 
                   child: Text('Sign in',
                   style: TextStyle(color: Colors.white),),

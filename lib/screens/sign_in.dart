@@ -1,4 +1,5 @@
 import 'package:delivery_app/screens/sign_in.dart';
+import 'package:delivery_app/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const SignIn());
@@ -37,18 +38,21 @@ Size size = MediaQuery.of(context).size;
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-           Positioned(
+           SizedBox(height: size.height * 0.02),
+             Positioned(
             child: Text(
-              "SIGN UP",
-              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green),
+              "Sign in",
+              style: TextStyle(color: Colors.blue, fontSize:20),
             ),
           ),
              Positioned(
-                  child: Image.asset(
-                    'assets/images/logo.png',
+                 child: Image.asset(
+                    'assets/images/food.png',
                     width: double.infinity,
+                    height:200,
                   )
                 ), 
+              
         Container(
           width:size.width,
           child: Column(
@@ -110,16 +114,9 @@ Size size = MediaQuery.of(context).size;
                 borderRadius: BorderRadius.circular(20),
                 child: OutlinedButton(
                   onPressed: (){
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SignIn();
-                        },
-                      ),
-                  );  
+                     
                   }, 
-                  child: Text('Sign up',
+                  child: Text('Sign in',
                   style: TextStyle(color: Colors.white),),
                   style: OutlinedButton.styleFrom(
                   shape: StadiumBorder(),
@@ -140,7 +137,14 @@ Size size = MediaQuery.of(context).size;
                 borderRadius: BorderRadius.circular(20),
                 child: OutlinedButton(
                   onPressed: (){
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignUp();
+                        },
+                      ),
+                  );  
                   }, 
                   child: Text('Sign up',
                   style: TextStyle(color: Colors.white),),

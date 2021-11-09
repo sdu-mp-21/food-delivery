@@ -15,12 +15,7 @@ class Body extends StatelessWidget{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[ 
-          SizedBox(height: size.height * 0.03),  
-          Positioned(
-            child: Text('Food delivery app',
-            style: TextStyle(color: Colors.white),
-            ),
-          ),
+          SizedBox(height: size.height * 0.01),  
           Container(
               width: size.width,
               alignment: Alignment.bottomCenter,
@@ -32,7 +27,12 @@ class Body extends StatelessWidget{
                     width: double.infinity,
                   )
                 ),
-                SizedBox(height: size.height * 0.06),
+                SizedBox(height: size.height * 0.03),
+                Text(
+                  "WELCOME, FRIEND!",
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30, color: Colors.white)
+                ),
+                SizedBox(height: size.height * 0.03),
                Container(
                  width: size.width*0.8,
                  child:  ClipRRect(
