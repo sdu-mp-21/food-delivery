@@ -43,11 +43,11 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     // TODO: implement initState
   //  super.initState();
-    networkHelper.getRestaurant().then((value) {
-      setState(() {
-        _restaurantList.addAll(value);
-      });
-    });
+  //   networkHelper.getRestaurant().then((value) {
+  //     setState(() {
+  //       _restaurantList.addAll(value);
+  //     });
+  //   });
     networkHelper.getMenu().then((value) {
       setState(() {
         _menuItemsList.addAll(value);
@@ -62,24 +62,31 @@ class _DetailScreenState extends State<DetailScreen> {
     var topContainerHeight = height * 0.4;
 
     return Scaffold(
-      body: Column(
-        children: [
-          // AnimatedContainer(
-          //   duration: Duration(milliseconds: 200),
-          //   alignment: Alignment.topCenter,
-          //   width: width,
-          //   height: isTopContainerClosed ? 0 : topContainerHeight,
-          //   child: DetailsTopContainer(),
-          // ),
-          DetailsTopContainer(),
-          Expanded(
-              child: ListView.builder(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              // AnimatedContainer(
+              //   duration: Duration(milliseconds: 200),
+              //   alignment: Alignment.topCenter,
+              //   width: width,
+              //   height: isTopContainerClosed ? 0 : topContainerHeight,
+              //   child: DetailsTopContainer(),
+              // ),
+              DetailsTopContainer(),
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                  // controller: scrollController,
                   itemCount: _menuItemsList.length,
                   itemBuilder: (context, index) {
                     return MenuItemContainer(menuItem: _menuItemsList[index]);
-                  }))
-        ],
+                  })
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -104,7 +111,8 @@ class MenuItemContainer extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image(
-                image: NetworkImage("https://rb.gy/ib6ugd"),
+                image: //NetworkImage(menuItem.imageUrl),
+                NetworkImage("https://rb.gy/ib6ugd"),
                 height: 100,
                 width: 100,
                 fit: BoxFit.cover,

@@ -8,18 +8,18 @@ class NetworkHelper {
 
   final String url; //https://fast-cliffs-74827.herokuapp.com/api/restaurants
 
-  Future<List<Restaurant>> getRestaurant() async{
-    var response = await http.get(Uri.parse(url));
-    List<Restaurant> restaurantList = [];
-    if(response.statusCode ==200){
-      var restaurantsJson = json.decode(response.body);
-      for(var restaurantJson in restaurantsJson){
-        restaurantList.add(Restaurant.fromJson(restaurantJson));
-      }
-    }
-    return restaurantList;
-
-  }
+  // Future<List<Restaurant>> getRestaurant() async{
+  //   var response = await http.get(Uri.parse(url));
+  //   List<Restaurant> restaurantList = [];
+  //   if(response.statusCode ==200){
+  //     var restaurantsJson = json.decode(response.body);
+  //     for(var restaurantJson in restaurantsJson){
+  //       restaurantList.add(Restaurant.fromJson(restaurantJson));
+  //     }
+  //   }
+  //   return restaurantList;
+  //
+  // }
 
   Future<List<MenuItem>> getMenu() async{
     var response = await http.get(Uri.parse(url));
