@@ -1,4 +1,6 @@
+import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/details_screen.dart';
+import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+   NetworkHelper networkHelper = NetworkHelper(
+       url:
+       "http://fast-cliffs-74827.herokuapp.com/api/restaurants/?format=json");
+   List<Restaurant> _restaurantsList = [];
+
+   @override
+   void initState() {
+     super.initState();
+     networkHelper.getRestaurant().then((value) {
+         setState(() {
+           _restaurantsList.addAll(value);
+         });
+       });
+   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,9 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 230,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: _restaurantsList.length,
                   itemBuilder: (context,index){
-                    return RestaurantCard();
+                    return RestaurantCard(restaurant: _restaurantsList[index]);
                   },
 
                 ),
@@ -135,9 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class RestaurantCard extends StatelessWidget {
-  const RestaurantCard({
-    Key? key,
-  }) : super(key: key);
+
+  Restaurant restaurant;
+
+  RestaurantCard({required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +171,7 @@ class RestaurantCard extends StatelessWidget {
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return DetailScreen();
+                    return DetailScreen(restaurant: restaurant);
                 }
                 ));
               },
@@ -185,7 +204,7 @@ class RestaurantCard extends StatelessWidget {
                                   Icons.watch,
                                   color: Color(0xFFB6B7B7),
                                 ),
-                                Text("11:00-20:00", style: TextStyle(color: Color(
+                                Text("${restaurant.scheduleList[DateTime.now().weekday-1].started_at.substring(0,5)}-${restaurant.scheduleList[DateTime.now().weekday-1].ended_at.substring(0,5)}", style: TextStyle(color: Color(
                                     0xFF6D6D6D)),),
                               ],
                             ),
@@ -198,14 +217,14 @@ class RestaurantCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "SDU Pizzeria",
+                          restaurant.name,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         SizedBox(height: 10.0),
                         Row(
                           children: [
                             Icon(Icons.star_border_outlined),
-                            Text("4.8"),
+                            Text(restaurant.rating.toString()),
                             SizedBox(width: 5,),
                             Icon(Icons.taxi_alert_outlined),
                             Text("500T"),
