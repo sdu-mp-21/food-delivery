@@ -46,9 +46,9 @@ class _ProfilePageState extends State<UserProfile>{
               children: <Widget>[
                 Icon(Icons.shopping_cart),
                 GestureDetector(
-                  // onTap: () {
-                  //       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
-                  //     }, 
+                  onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
+                  }, 
                   child: Positioned(
                   right: 0,
                   child: Container(
