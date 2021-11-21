@@ -1,5 +1,7 @@
+import 'package:delivery_app/components/restaurant_big_card.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/details_screen.dart';
+import 'package:delivery_app/screens/restaurants_list_screen.dart';
 import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Profile",
+          title: Text("Home",
             style: TextStyle(color: Colors.white),
           ),
           elevation: 0.5,
@@ -165,6 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
+
+            //Deliver to
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -188,7 +192,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onChanged: (_) => {},
               )),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
+
+            //Search bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Container(
@@ -208,7 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 20),
+
+            //discount Slider
             Container(
               width: double.infinity,
               height: 100,
@@ -217,12 +225,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   SliderBannerItem(imageUrl: "https://bit.ly/3bPkuH2"),
-                  SliderBannerItem(imageUrl: "https://bit.ly/3bPkuH2"),
-                  SliderBannerItem(imageUrl: "https://bit.ly/3bPkuH2"),
+                  SliderBannerItem(imageUrl: "https://bit.ly/32mO0Td"),
+                  SliderBannerItem(imageUrl: "https://bit.ly/3DymC2d"),
                 ]),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
+
+            //popular restaurants list
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
@@ -233,7 +243,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   TextButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RestaurantsListScreen(
+                                title: "Popular Restaurants",
+                                restaurantsList: _restaurantsList),),)
+                      },
                       child: Row(
                         children: [
                           Text("View all"),
@@ -244,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 17.0),
               child: Container(
                 height: 230,
                 child: ListView.builder(
@@ -257,44 +272,75 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 15),
+
+            //new restaurants
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "New Restaurants",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  TextButton(
+                      onPressed: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => RestaurantsListScreen(
+                              title: "New Restaurants",
+                              restaurantsList: _restaurantsList.reversed.toList()),),)
+                      },
+                      child: Row(
+                        children: [
+                          Text("View all"),
+                          Icon(Icons.keyboard_arrow_right)
+                        ],
+                      ))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17.0),
+              child: Container(
+                height: 230,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _restaurantsList.length,
+                  itemBuilder: (context,index){
+                    return SliderRestaurantCard(restaurant: _restaurantsList.reversed.toList()[index]);
+                  },
+                ),
+              ),
+            ),
             SizedBox(height: 20),
-            /*Padding(
+            //all restaurants
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text("All Restaurants",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Container(
-                height: 500,
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  physics: ScrollPhysics(),
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 2,
-                      itemBuilder: (context, index){
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Container(
-                        height: 150,
-                        width: MediaQuery.of(context).size.width-40,
-                        color: Colors.grey,
-
-                      ),
-                    );
-                  }),
-                ),
+              padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+              child: SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: _restaurantsList.length,
+                    itemBuilder: (context, index){
+                  return RestaurantBigCard(restaurant: _restaurantsList[index]);
+                }),
               ),
-            )*/
+            )
           ],
         ),
       ),
     ));
   }
 }
+
 
 class SliderRestaurantCard extends StatelessWidget {
 
@@ -309,7 +355,10 @@ class SliderRestaurantCard extends StatelessWidget {
       child: SizedBox(
         width: 250,
         child: Card(
-
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
             elevation: 4.0,
             child: InkWell(
               onTap: (){
@@ -325,11 +374,12 @@ class SliderRestaurantCard extends StatelessWidget {
                     children: [Container(
                       height: 120.0,
                       child: Ink.image(
-
                         image: NetworkImage("https://rb.gy/ib6ugd"),
                         fit: BoxFit.cover,
                       ),
                     ),
+                      
+                      //working hours
                       Positioned(
                           bottom: 0,
                           right: -1,
