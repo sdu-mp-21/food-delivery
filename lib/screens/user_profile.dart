@@ -167,27 +167,14 @@ class _ProfilePageState extends State<UserProfile>{
                     child: Icon(Icons.person, size: 80, color: Colors.grey.shade300,),
                   ),
                   SizedBox(height: 20,),
-                  Text('Mr. Donald Trump', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                  Text('Username', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
-                  Text('Former President', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text('User', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(height: 10,),
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "User Information",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
                         Card(
                           child: Container(
                             alignment: Alignment.topLeft,
@@ -204,7 +191,7 @@ class _ProfilePageState extends State<UserProfile>{
                                               horizontal: 12, vertical: 4),
                                           leading: Icon(Icons.my_location),
                                           title: Text("Location"),
-                                          subtitle: Text("USA"),
+                                          subtitle: Text("KZ"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.email),
@@ -214,7 +201,7 @@ class _ProfilePageState extends State<UserProfile>{
                                         ListTile(
                                           leading: Icon(Icons.phone),
                                           title: Text("Phone"),
-                                          subtitle: Text("99--99876-56"),
+                                          subtitle: Text("8 777 777 77 77"),
                                         ),
                                       ],
                                     ),

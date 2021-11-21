@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Good morning Morty!",
+                    "Good morning User!",
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   Icon(Icons.shopping_cart),
