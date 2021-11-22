@@ -39,7 +39,7 @@ dependencies:
   hexcolor: ^2.0.4
   font_awesome_flutter: ^9.2.0
   otp_text_field: ^1.1.1
-
+  flutter_typeahead: ^3.2.3
 
 dev_dependencies:
   flutter_test:

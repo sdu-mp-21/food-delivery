@@ -76,6 +76,7 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
       onTap: (){
         showModalBottomSheet(context: context, builder: (context){
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Column(
                 children: [
@@ -114,21 +115,24 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 60),
-                        TextButton(onPressed: (){}, child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Add to card", style: TextStyle(color: Colors.white),),
-                              Text(widget.menuItem.price.toString()+"T", style: TextStyle(color: Colors.white)),
-                            ],
+                        SizedBox(height: 20),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(onPressed: (){}, child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Add to card", style: TextStyle(color: Colors.white),),
+                                Text(widget.menuItem.price.toString()+"T", style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.deepOrange,
+                            ),
                           ),
                         ),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -300,16 +304,18 @@ class DetailsTopContainer extends StatelessWidget {
                                 );
                             }),
                           ),
-                          SizedBox(height: 10),
-                          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                            child: Text("Close", style: TextStyle(color: Colors.white)),
-                          ),
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.deepOrange,
+                          SizedBox(height:20),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: TextButton(onPressed: () => Navigator.of(context).pop(), child: const Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                              child: Text("Close", style: TextStyle(color: Colors.white)),
                             ),
-                          )
-
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.deepOrange,
+                              ),
+                            ),
+                          ),
                         ],
                       );
                     });
