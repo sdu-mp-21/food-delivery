@@ -32,8 +32,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -78,6 +76,7 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
       onTap: (){
         showModalBottomSheet(context: context, builder: (context){
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Column(
                 children: [
@@ -116,21 +115,24 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 60),
-                        TextButton(onPressed: (){}, child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Add to card", style: TextStyle(color: Colors.white),),
-                              Text(widget.menuItem.price.toString()+"T", style: TextStyle(color: Colors.white)),
-                            ],
+                        SizedBox(height: 20),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(onPressed: (){}, child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Add to card", style: TextStyle(color: Colors.white),),
+                                Text(widget.menuItem.price.toString()+"T", style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.deepOrange,
+                            ),
                           ),
                         ),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -152,8 +154,8 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: NetworkImage(widget.menuItem.imageUrl),
-                  //NetworkImage("https://rb.gy/ib6ugd"),
+                  image: //NetworkImage(widget.menuItem.imageUrl),
+                  NetworkImage("https://rb.gy/ib6ugd"),
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
@@ -212,10 +214,11 @@ class DetailsTopContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        //restaurant image
         Container(
           height: MediaQuery.of(context).size.height * 0.4,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black,
@@ -224,7 +227,7 @@ class DetailsTopContainer extends StatelessWidget {
                 )
               ]),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black26,
@@ -232,14 +235,15 @@ class DetailsTopContainer extends StatelessWidget {
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                  image: new NetworkImage("https://rb.gy/ib6ugd"),
+                  image: NetworkImage("https://rb.gy/ib6ugd"),
                 ),
               ),
             ),
           ),
         ),
+        //return back and schedule info button
         Positioned(
-            top: 40,
+            top: 15,
             left: 15,
             right: 15,
             child: Row(
@@ -300,16 +304,18 @@ class DetailsTopContainer extends StatelessWidget {
                                 );
                             }),
                           ),
-                          SizedBox(height: 10),
-                          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                            child: Text("Close", style: TextStyle(color: Colors.white)),
-                          ),
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.deepOrange,
+                          SizedBox(height:20),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: TextButton(onPressed: () => Navigator.of(context).pop(), child: const Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                              child: Text("Close", style: TextStyle(color: Colors.white)),
                             ),
-                          )
-
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.deepOrange,
+                              ),
+                            ),
+                          ),
                         ],
                       );
                     });
@@ -318,6 +324,7 @@ class DetailsTopContainer extends StatelessWidget {
 
               ],
             )),
+        //restaurant details
         Positioned(
           left: 20.0,
           bottom: 20.0,
@@ -342,6 +349,7 @@ class DetailsTopContainer extends StatelessWidget {
             )
           ]),
         ),
+        //restaurant rating
         Positioned(
             right: 20.0,
             bottom: 30.0,
