@@ -1,4 +1,4 @@
-from .views import RestaurantViewSet
+from .views import OrderViewSet
 
 from rest_framework.routers import DefaultRouter
 
@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 router.register(
-    prefix='restaurants', viewset=RestaurantViewSet, basename='restaurants'
+    prefix='orders', viewset=OrderViewSet, basename='orders'
 )
 
 urlpatterns = router.urls

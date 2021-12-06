@@ -1,6 +1,6 @@
-from .users import UserModelViewSet
+from .users import UserViewSet
 
 
 __all__ = (
-    'UserModelViewSet',
+    'UserViewSet',
 )
