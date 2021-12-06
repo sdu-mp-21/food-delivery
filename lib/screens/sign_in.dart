@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:delivery_app/screens/forgot_password.dart';
 import 'package:delivery_app/screens/sign_up.dart';
 import 'package:delivery_app/screens/user_profile.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_app/components/header_widget.dart';
 import 'package:delivery_app/components/theme_helper.dart';
+import 'package:http/http.dart' as http;
 void main() => runApp(const SignIn());
 
 class SignIn extends StatefulWidget {
@@ -19,7 +22,10 @@ class SignIn extends StatefulWidget {
 class MyCustomFormState extends State<SignIn> {
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
-  
+
+  var usernameController = TextEditingController();
+  var passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
       return Scaffold(
@@ -52,6 +58,7 @@ class MyCustomFormState extends State<SignIn> {
                           children: [
                             Container(
                               child: TextField(
+                                controller: usernameController,
                                 decoration: ThemeHelper().textInputDecoration('User Name', 'Enter your username'),
                               ),
                               decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -59,6 +66,7 @@ class MyCustomFormState extends State<SignIn> {
                             SizedBox(height: 30.0),
                             Container(
                               child: TextField(
+                                controller: passwordController,
                                 obscureText: true,
                                 decoration: ThemeHelper().textInputDecoration('Password', 'Enter your password'),
                               ),
@@ -79,14 +87,14 @@ class MyCustomFormState extends State<SignIn> {
                             Container(
                               decoration: ThemeHelper().buttonBoxDecoration(context),
                               child: ElevatedButton(
+                            
                                 style: ThemeHelper().buttonStyle(),
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                                   child: Text('Sign In'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                 ),
                                 onPressed: (){
-                                  //After successful login we will redirect to profile page. Let's create profile page now
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserProfile()));
+                                  login();
                                 },
                               ),
                             ),
@@ -121,4 +129,36 @@ class MyCustomFormState extends State<SignIn> {
       ),
     );
   }
+
+  Future <void> login() async {
+    if(passwordController.text.isNotEmpty && usernameController.text.isNotEmpty){
+
+     var response =  await http.post(
+          Uri.parse("https://cors-anywhere.herokuapp.com/https://fast-cliffs-74827.herokuapp.com/api/token-auth/"),
+          headers: { 
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }, 
+          body: jsonEncode({
+            "username":usernameController.text,
+            "password":passwordController.text
+          })
+      );
+      if(response.statusCode==200){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserProfile()));
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Invalid username or password")
+        ));
+      }
+    }  
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Empty username or password is not allowed!")
+      ));
+    }   
+  }
+
 }

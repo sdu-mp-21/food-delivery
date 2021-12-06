@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:delivery_app/screens/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -6,6 +8,7 @@ import 'package:delivery_app/components/header_widget.dart';
 import 'package:delivery_app/components/theme_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
 void main() => runApp(const SignUp());
 
 class SignUp extends StatefulWidget {
@@ -20,6 +23,13 @@ class MyCustomFormState extends State<SignUp> {
    final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
+
+    var usernameController = TextEditingController();
+    var passwordController = TextEditingController();
+    var addressController = TextEditingController();
+    var passwordConfirmController = TextEditingController();
+    var titleController = TextEditingController();
+    
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +90,19 @@ class MyCustomFormState extends State<SignUp> {
                         SizedBox(height: 30,),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('First Name', 'Enter your first name'),
+                            controller: usernameController,
+                            decoration: ThemeHelper().textInputDecoration('Username', 'Enter your username'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 30,),
+                        ), 
+                        SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('Last Name', 'Enter your last name'),
+                            controller: addressController,
+                            decoration: ThemeHelper().textInputDecoration('Address', 'Enter your address'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
+                        ), 
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
@@ -124,6 +136,7 @@ class MyCustomFormState extends State<SignUp> {
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
+                            controller: passwordController,
                             obscureText: true,
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password*", "Enter your password"),
@@ -191,12 +204,7 @@ class MyCustomFormState extends State<SignUp> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => UserProfile()
-                                    ),
-                                        (Route<dynamic> route) => false
-                                );
+                               login();
                               }
                             },
                           ),
@@ -278,4 +286,41 @@ class MyCustomFormState extends State<SignUp> {
     );
   }
 
+  Future <void> login() async {
+    if(passwordController.text.isNotEmpty && usernameController.text.isNotEmpty){
+
+     var response =  await http.post(
+          Uri.parse("https://cors-anywhere.herokuapp.com/https://fast-cliffs-74827.herokuapp.com/api/users/"),
+          headers: { 
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }, 
+          body: jsonEncode({
+            "username":usernameController.text,
+            "password":passwordController.text,
+            "address_set":[{
+              "latitude":43.238949,
+              "longitude":76.889709,
+              "text_address":addressController.text,
+              "comment":addressController.text,
+              }]
+          })
+      );
+      if(response.statusCode==200){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserProfile()));
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Invalid username or password")
+        ));
+      }
+    }  
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Empty username or password is not allowed!")
+      ));
+    }   
+  }
+  
 }
