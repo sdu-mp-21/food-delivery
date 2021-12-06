@@ -1,119 +1,101 @@
-import 'package:delivery_app/models/restaurant_model.dart';
-import 'package:delivery_app/services/location_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'dart:typed_data';
 
-import 'details_screen.dart';
+import 'package:delivery_app/models/restaurant_model.dart';
+import 'package:delivery_app/screens/details_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class MapScreen extends StatefulWidget {
   List<Restaurant> restaurantsList;
 
-  MapScreen({required this.restaurantsList});
-
-  LatLng? currentLocation;
+  MapScreen(this.restaurantsList);
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-  MapController _mapController = MapController();
+  GoogleMapController? _controller;
+  Location currentLocation = Location();
+  Set<Marker> _markers = {};
 
-  List<Marker> _buildMarkers(
-      BuildContext context, List<Restaurant> restaurants) {
-    List<Marker> markers = [];
-
-    restaurants.forEach((restaurant) {
-      markers.add(Marker(
-          width: 55,
-          height: 55,
-          point:
-              LatLng(restaurant.address.latitude, restaurant.address.longitude),
-          builder: (ctx) => GestureDetector(
+  void getMarkers() {
+    //markers to place on map
+    setState(() {
+      widget.restaurantsList.forEach((restaurant) {
+        _markers.add(
+          Marker(
+            markerId: MarkerId(restaurant.id.toString()),
+            position: LatLng(restaurant.address.latitude, restaurant.address.longitude),
+            icon: BitmapDescriptor.defaultMarker,
+            infoWindow: InfoWindow( //popup info
+              title: restaurant.name,
+              snippet: restaurant.address.text_address,
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         DetailScreen(restaurant: restaurant)));
               },
-              child: Image(
-                image: NetworkImage('https://bit.ly/3llRID1'),
-                fit: BoxFit.contain,
-              ))));
+            ),
+          ),
+        );
+      });
+      //add more markers here
+    });
+  }
+
+  void getLocation() async {
+    var location = await currentLocation.getLocation();
+
+    _controller
+        ?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+      target: LatLng(location.latitude ?? 0.0, location.longitude ?? 0.0),
+      zoom: 17.0,
+    )));
+    print(location.latitude);
+    print(location.longitude);
+    setState(() {
+      _markers.add(Marker(
+          markerId: MarkerId('Home'),
+          position:
+              LatLng(location.latitude ?? 0.0, location.longitude ?? 0.0)));
     });
 
-    return markers;
+
   }
 
-  _getCurrentLocation() {
-    _mapController.onReady.then((value) => _mapController.move(
-        LatLng(widget.currentLocation!.latitude,
-            widget.currentLocation!.longitude),
-        15));
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+    getMarkers();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: BlocListener<LocationCubit, LocationState>(
-            listener: (previousState, currentState) {
-              if (currentState is LocationLoaded) {
-                setState(() {
-                  _mapController.onReady.then((value) => _mapController.move(
-                      LatLng(currentState.latitude, currentState.longitude),
-                      15));
-                  widget.currentLocation =
-                      LatLng(currentState.latitude, currentState.longitude);
-                });
-              }
-            },
-            child: Stack(
-              children:[
-                FlutterMap(
-                mapController: _mapController,
-                options: MapOptions(
-                  center: LatLng(43.238949, 76.889709),
-                  zoom: 12,
-                  maxZoom: 17,
-                  minZoom: 3.5,
-                ),
-                layers: [
-                  new TileLayerOptions(
-                    urlTemplate:
-                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    subdomains: ['a', 'b', 'c'],
-                    retinaMode: true,
-                  ),
-                  MarkerLayerOptions(
-                    markers: [
-                      if (widget.currentLocation != null)
-                        Marker(
-                            width: 55,
-                            height: 55,
-                            point: LatLng(widget.currentLocation!.latitude,
-                                widget.currentLocation!.longitude),
-                            builder: (ctx) => GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.red,
-                                  size: 55,
-                                ))),
-                      ..._buildMarkers(context, widget.restaurantsList)
-                    ],
-                  ),
-                ],
-              ),
-
-              ]
-            )),
-        floatingActionButton: new FloatingActionButton(
-            elevation: 0.0,
-            child: new Icon(Icons.location_on),
-            backgroundColor: new Color(0xFFE57373),
-            onPressed: _getCurrentLocation));
+      appBar: AppBar(),
+      body: GoogleMap(
+        zoomControlsEnabled: false,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(43.238949, 76.889709),
+          zoom: 11.0,
+        ),
+        onMapCreated: (GoogleMapController controller) {
+          _controller = controller;
+        },
+        markers: _markers,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.location_searching,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          getLocation();
+        },
+      ),
+    );
   }
 }
