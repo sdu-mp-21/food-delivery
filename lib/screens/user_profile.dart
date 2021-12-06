@@ -91,7 +91,7 @@ class _ProfilePageState extends State<UserProfile>{
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: Text("FlutterTutorial.Net",
+                  child: Text('Food Delivery',
                     style: TextStyle(fontSize: 25,color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),

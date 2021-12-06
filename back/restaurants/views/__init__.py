@@ -1,6 +1,6 @@
-from .restaurants import RestaurantModelViewSet
+from .restaurants import RestaurantViewSet
 
 
 __all__ = (
-    'RestaurantModelViewSet',
+    'RestaurantViewSet',
 )
