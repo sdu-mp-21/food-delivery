@@ -3,10 +3,8 @@ import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/sign_in.dart';
 import 'package:delivery_app/screens/sign_up.dart';
 import 'package:delivery_app/screens/user_profile.dart';
-import 'package:delivery_app/services/location_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_app/screens/home_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +14,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-        BlocProvider<LocationCubit>(
-        create: (BuildContext context) => LocationCubit()..getLocation()),
-        ],
-
-      child: MaterialApp(
+    return MaterialApp(
       title: 'Delivery App',
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -39,7 +31,6 @@ class MyApp extends StatelessWidget {
         '/user-profile':(context)=>UserProfile(),
         '/main' :(context)=> const HomeScreen()
       },
-    )
     );
   }
 }
