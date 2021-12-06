@@ -1,4 +1,4 @@
-from .views import UserModelViewSet
+from .views import UserViewSet
 
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
@@ -12,7 +12,7 @@ urlpatterns = [
 router = DefaultRouter()
 
 router.register(
-    prefix='users', viewset=UserModelViewSet, basename='users'
+    prefix='users', viewset=UserViewSet, basename='users'
 )
 
 urlpatterns += router.urls

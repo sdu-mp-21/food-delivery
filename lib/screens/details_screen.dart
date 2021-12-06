@@ -154,8 +154,8 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: NetworkImage(widget.menuItem.imageUrl),
-                  //NetworkImage("https://rb.gy/ib6ugd"),
+                  image: //NetworkImage(widget.menuItem.imageUrl),
+                  NetworkImage("https://rb.gy/ib6ugd"),
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
@@ -235,7 +235,7 @@ class DetailsTopContainer extends StatelessWidget {
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                  image: NetworkImage(restaurant.imageUrl),//NetworkImage("https://rb.gy/ib6ugd"),
+                  image: NetworkImage("https://rb.gy/ib6ugd"),
                 ),
               ),
             ),

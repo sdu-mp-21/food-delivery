@@ -6,7 +6,7 @@ from restaurants.serializers import (
 from rest_framework import viewsets
 
 
-class RestaurantModelViewSet(viewsets.ModelViewSet):
+class RestaurantViewSet(viewsets.ModelViewSet):
     list_serializer_class = ListRestaurantSerializer
     retrieve_serializer_class = RetrieveRestaurantSerializer
     http_method_names = ['get']
