@@ -284,11 +284,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 MaterialButton(
                   onPressed: () => {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MapScreen(
-                            restaurantsList: _restaurantsList),
-                      ),
-                    )
+                        MaterialPageRoute(builder: (context)=> MapScreen(_restaurantsList)))
                   },
                   child: Text("Open in map"),
                 ),
