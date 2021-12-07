@@ -57,7 +57,7 @@ class Order(models.Model):
         field=status, source=Status.ON_DELIVERY,
         target=Status.COMPLETED
     )
-    def to_on_delivery(self):
+    def to_completed(self):
         pass
 
     @transition(
