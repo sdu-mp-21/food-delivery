@@ -1,6 +1,7 @@
 import 'package:delivery_app/components/restaurant_big_card.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/details_screen.dart';
+import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/restaurants_list_screen.dart';
 import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -280,6 +281,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     onChanged: (_) => {},
                   )),
                 ),
+                MaterialButton(
+                  onPressed: () => {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context)=> MapScreen(_restaurantsList)))
+                  },
+                  child: Text("Open in map"),
+                ),
                 SizedBox(height: 15),
 
                 //Search bar
@@ -508,7 +516,7 @@ class SliderRestaurantCard extends StatelessWidget {
                     Container(
                       height: 120.0,
                       child: Ink.image(
-                        image: NetworkImage("https://rb.gy/ib6ugd"),
+                        image: NetworkImage(restaurant.imageUrl),//NetworkImage("https://rb.gy/ib6ugd"),
                         fit: BoxFit.cover,
                       ),
                     ),

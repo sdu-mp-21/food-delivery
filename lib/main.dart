@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Delivery App',
       theme: ThemeData(
-        primaryColor: primaryColor,
-        accentColor: accentColor,
-        scaffoldBackgroundColor: Colors.grey.shade100,
-        primarySwatch: Colors.grey
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          scaffoldBackgroundColor: Colors.grey.shade100,
+          primarySwatch: Colors.grey
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/auth',
