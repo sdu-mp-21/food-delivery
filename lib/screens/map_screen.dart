@@ -1,10 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:location/location.dart' as location;
+
 
 class MapScreen extends StatefulWidget {
   List<Restaurant> restaurantsList;
@@ -17,7 +17,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _controller;
-  Location currentLocation = Location();
+  location.Location currentLocation =  location.Location();
   Set<Marker> _markers = {};
 
   void getMarkers() {
@@ -61,7 +61,19 @@ class _MapScreenState extends State<MapScreen> {
           position:
               LatLng(location.latitude ?? 0.0, location.longitude ?? 0.0)));
     });
+    //
+    // List<Placemark> placemarks = await placemarkFromCoordinates(location.latitude?? 45.25, location.longitude?? 76.23);
+    // print(placemarks);
+    // Placemark place = placemarks[0];
+    // print('${place.street}');
+    GetAddressFromLatLong(location);
+  }
 
+  Future<void> GetAddressFromLatLong(var location)async {
+    List<geocoding.Placemark> placemarks = await geocoding.placemarkFromCoordinates(location.latitude, location.longitude);
+    geocoding.Placemark place = placemarks[0];
+    var Address = '${place.street}';
+    print(Address);
 
   }
 
