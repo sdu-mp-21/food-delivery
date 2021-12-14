@@ -1,11 +1,11 @@
 class Address {
-  int id;
+  int? id;
   String text_address;
-  String comment;
+  String? comment;
   double latitude;
   double longitude;
 
-  Address({required this.id, required this.latitude, required this.longitude, required this.text_address, required this.comment});
+  Address({this.id, required this.latitude, required this.longitude, required this.text_address, this.comment});
 
   factory Address.fromJson(Map<String, dynamic> parsedJson){
     return Address(

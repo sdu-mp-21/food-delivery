@@ -34,9 +34,11 @@ class RestaurantBigCard extends StatelessWidget {
                 Container(
                   height: 150,
                   child: Ink.image(
-                    image: NetworkImage("https://rb.gy/ib6ugd"),
+                    image: NetworkImage(restaurant.imageUrl),
+                    //NetworkImage("https://rb.gy/ib6ugd"),
                     fit: BoxFit.cover,
                   ),
+                  color: Colors.grey,
                 ),
                 Container(
                   child: Padding(

@@ -84,10 +84,12 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                       children: [
                         Container(
                           height: 180.0,
+                          width: double.infinity,
                           child: Ink.image(
                             image: NetworkImage(widget.menuItem.imageUrl),
                             fit: BoxFit.cover,
                           ),
+                          color: Colors.grey,
                         ),
                       ]),
                   Padding(
@@ -151,16 +153,21 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
         child: Row(
           children: [
             Container(
+              height: 100,
+              width: 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: //NetworkImage(widget.menuItem.imageUrl),
-                  NetworkImage("https://rb.gy/ib6ugd"),
+                  image: NetworkImage(widget.menuItem.imageUrl),
+
+                  //NetworkImage("https://rb.gy/ib6ugd"),
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
                 ),
+
               ),
+              color: Colors.grey,
             ),
             SizedBox(width: 20),
             Column(
@@ -221,7 +228,7 @@ class DetailsTopContainer extends StatelessWidget {
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
               boxShadow: const [
                 BoxShadow(
-                  color: Colors.black,
+                  color: Colors.grey,
                   offset: Offset(0.0, 2.0),
                   blurRadius: 6.0,
                 )
@@ -235,7 +242,8 @@ class DetailsTopContainer extends StatelessWidget {
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                  image: NetworkImage("https://rb.gy/ib6ugd"),
+                  image: NetworkImage(restaurant.imageUrl),
+                  //NetworkImage("https://rb.gy/ib6ugd"),
                 ),
               ),
             ),

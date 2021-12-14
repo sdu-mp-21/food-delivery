@@ -1,4 +1,5 @@
 import 'package:delivery_app/components/restaurant_big_card.dart';
+import 'package:delivery_app/models/address_model.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/details_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
@@ -19,16 +20,53 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
-/*  late AnimationController controller;
-  late Animation<Offset> offset;*/
 
   NetworkHelper networkHelper = NetworkHelper(
       url:
           "http://fast-cliffs-74827.herokuapp.com/api/restaurants/?format=json");
   List<Restaurant> _restaurantsList = [];
+
+  List<Address> userAddresses=[
+    Address(latitude: 34, longitude: 70, text_address: 'No Address')
+  ];
+
+  void updateInformation(Address newAddress) {
+    setState(() {
+      userAddresses.add(newAddress);
+      
+    });
+  }
+
+  void moveToMapScreen() async {
+    final Address userAdress = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+          fullscreenDialog: true, builder: (context) => MapScreen(_restaurantsList)),
+    );
+    updateInformation(userAdress);
+    //print(userAdress.text_address);
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems{
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text('address'),value: 'address'),
+    ];
+    userAddresses.forEach((address) {
+      menuItems.add(
+      DropdownMenuItem(child: Text(address.text_address),value: address.text_address),
+    );});
+    // menuItems = [
+    //   DropdownMenuItem(child: Text("USA"),value: "USA"),
+    //   DropdownMenuItem(child: Text("Canada"),value: "Canada"),
+    //   DropdownMenuItem(child: Text("Brazil"),value: "Brazil"),
+    //   DropdownMenuItem(child: Text("England"),value: "England"),
+    // ];
+    return menuItems;
+  }
+  var selectedValue = 'No Address';
 
   @override
   void initState() {
@@ -38,11 +76,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         _restaurantsList.addAll(value);
       });
     });
-    /*controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 7))..repeat(reverse: true);
-
-    offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.5, 0.0))
-        .animate(controller);*/
   }
 
   @override
@@ -267,25 +300,39 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                    value: "current location",
-                    items: [
-                      DropdownMenuItem(
-                        child: Text("Current Location"),
-                        value: "current location",
-                      ),
-                    ],
-                    icon: Icon(Icons.arrow_drop_down),
-                    style: Theme.of(context).textTheme.headline6,
-                    onChanged: (_) => {},
-                  )),
+                  child: DropdownButton(
+                    value: selectedValue,
+                    icon: Icon(Icons.keyboard_arrow_down),
+                    items: dropdownItems,
+                    // userAddresses.map((address) {
+                    //   return DropdownMenuItem(
+                    //       value: address.text_address,
+                    //       child: Text(address.text_address)
+                    //   );
+                    // }
+                    // ).toList(),
+
+                    onChanged: (String? newValue){
+                      setState(() {
+                        selectedValue = newValue!;
+                      });
+                    },
+                  ),
+                  // child: DropdownButtonHideUnderline(
+                  //     child: DropdownButton(
+                  //       value: selectedValue,
+                  //       items: dropdownItems,
+                  //       icon: Icon(Icons.arrow_drop_down),
+                  //       style: Theme.of(context).textTheme.headline6,
+                  //       onChanged: (String? ){
+                  //         setState(() {
+                  //           selectedValue = newValue!;
+                  //         });
+                  //       },
+                  // )),
                 ),
                 MaterialButton(
-                  onPressed: () => {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context)=> MapScreen(_restaurantsList)))
-                  },
+                  onPressed: () => moveToMapScreen(),
                   child: Text("Open in map"),
                 ),
                 SizedBox(height: 15),
@@ -330,14 +377,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         );
                       },
                     ),
-                    /*TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                      hintText: "Search food",
-                      hintStyle:
-                          TextStyle(color: Color(0xFFB6B7B7), fontSize: 18)),
-                ),*/
                   ),
                 ),
                 SizedBox(height: 20),
@@ -519,6 +558,7 @@ class SliderRestaurantCard extends StatelessWidget {
                         image: NetworkImage(restaurant.imageUrl),//NetworkImage("https://rb.gy/ib6ugd"),
                         fit: BoxFit.cover,
                       ),
+                      color: Colors.grey,
                     ),
 
                     //working hours
