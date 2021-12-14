@@ -1,6 +1,7 @@
 import 'package:delivery_app/components/restaurant_big_card.dart';
 import 'package:delivery_app/models/address_model.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
+import 'package:delivery_app/screens/cart_screen.dart';
 import 'package:delivery_app/screens/details_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/restaurants_list_screen.dart';
@@ -47,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
           fullscreenDialog: true, builder: (context) => MapScreen(_restaurantsList)),
     );
     updateInformation(userAdress);
-    //print(userAdress.text_address);
   }
 
   List<DropdownMenuItem<String>> get dropdownItems{
@@ -58,12 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
       menuItems.add(
       DropdownMenuItem(child: Text(address.text_address),value: address.text_address),
     );});
-    // menuItems = [
-    //   DropdownMenuItem(child: Text("USA"),value: "USA"),
-    //   DropdownMenuItem(child: Text("Canada"),value: "Canada"),
-    //   DropdownMenuItem(child: Text("Brazil"),value: "Brazil"),
-    //   DropdownMenuItem(child: Text("England"),value: "England"),
-    // ];
+
     return menuItems;
   }
   var selectedValue = 'No Address';
@@ -111,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => CartScreen()),
                       );
                     },
                     child: Positioned(
@@ -194,6 +189,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.shopping_bag_rounded,
+                      size: _drawerIconSize, color: Colors.grey.shade800),
+                  title: Text(
+                    'My Orders',
+                    style: TextStyle(
+                        fontSize: _drawerFontSize, color: Colors.grey.shade800),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CartScreen()),
                     );
                   },
                 ),
