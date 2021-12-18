@@ -19,7 +19,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             'list': self.list_serializer_class,
             'retrieve': self.retrieve_serializer_class,
             'create': self.create_serializer_class,
-            'update': self.update_serializer_class,
+            'partial_update': self.update_serializer_class,
         }
         return serializers[self.action]
 
