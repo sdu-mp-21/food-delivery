@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:delivery_app/components/header_widget.dart';
 import 'package:delivery_app/components/theme_helper.dart';
 import 'package:http/http.dart' as http;
+
 void main() => runApp(const SignIn());
 
 class SignIn extends StatefulWidget {
@@ -22,6 +23,7 @@ class SignIn extends StatefulWidget {
 class MyCustomFormState extends State<SignIn> {
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
+  //final LocalStorage storage = new LocalStorage('token');
 
   var usernameController = TextEditingController();
   var passwordController = TextEditingController();
@@ -59,19 +61,29 @@ class MyCustomFormState extends State<SignIn> {
                             Container(
                               child: TextField(
                                 controller: usernameController,
-                                decoration: ThemeHelper().textInputDecoration('User Name', 'Enter your username'),
+                                decoration: ThemeHelper().textInputDecoration('Username', 'Enter your username'),
                               ),
                               decoration: ThemeHelper().inputBoxDecorationShaddow(),
                             ),
                             SizedBox(height: 30.0),
                             Container(
-                              child: TextField(
-                                controller: passwordController,
-                                obscureText: true,
-                                decoration: ThemeHelper().textInputDecoration('Password', 'Enter your password'),
-                              ),
-                              decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
+                          child: TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: ThemeHelper().textInputDecoration(
+                                "Password*", "Enter your password"),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter your password";
+                              }
+                              else if(val.length<8){
+                                return "Password should contain at least 8 characters";
+                              }
+                              return null;
+                            },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
                             SizedBox(height: 15.0),
                             Container(
                               margin: EdgeInsets.fromLTRB(10,0,10,20),
@@ -134,7 +146,7 @@ class MyCustomFormState extends State<SignIn> {
     if(passwordController.text.isNotEmpty && usernameController.text.isNotEmpty){
 
      var response =  await http.post(
-          Uri.parse("https://cors-anywhere.herokuapp.com/https://fast-cliffs-74827.herokuapp.com/api/token-auth/"),
+          Uri.parse("https://cors-anywhere.herokuapp.com/http://thawing-taiga-45359.herokuapp.com/api/token-auth/"),
           headers: { 
             'Content-type': 'application/json',
             'Accept': 'application/json',
@@ -146,6 +158,7 @@ class MyCustomFormState extends State<SignIn> {
           })
       );
       if(response.statusCode==200){
+     //   storage.setItem('token', response.toJSONEncodable());
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserProfile()));
       }
       else{

@@ -26,9 +26,9 @@ class MyCustomFormState extends State<SignUp> {
 
     var usernameController = TextEditingController();
     var passwordController = TextEditingController();
-    var addressController = TextEditingController();
+    var firstnameController = TextEditingController();
     var passwordConfirmController = TextEditingController();
-    var titleController = TextEditingController();
+    var lastnameController = TextEditingController();
     
 
   @override
@@ -90,46 +90,24 @@ class MyCustomFormState extends State<SignUp> {
                         SizedBox(height: 30,),
                         Container(
                           child: TextFormField(
-                            controller: usernameController,
-                            decoration: ThemeHelper().textInputDecoration('Username', 'Enter your username'),
+                            controller: firstnameController,
+                            decoration: ThemeHelper().textInputDecoration('Firstname', 'Enter your firstname'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ), 
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            controller: addressController,
-                            decoration: ThemeHelper().textInputDecoration('Address', 'Enter your address'),
+                            controller: lastnameController,
+                            decoration: ThemeHelper().textInputDecoration('Lastname', 'Enter your lastname'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ), 
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration("E-mail address", "Enter your email"),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                return "Enter a valid email address";
-                              }
-                              return null;
-                            },
-                          ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Mobile Number",
-                                "Enter your mobile number"),
-                            keyboardType: TextInputType.phone,
-                            validator: (val) {
-                              if(!(val!.isEmpty) && !RegExp(r"^(\d+)*$").hasMatch(val)){
-                                return "Enter a valid phone number";
-                              }
-                              return null;
-                            },
+                            controller:usernameController,
+                            decoration: ThemeHelper().textInputDecoration("Username", "Enter your username"),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
@@ -143,6 +121,28 @@ class MyCustomFormState extends State<SignUp> {
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your password";
+                              }
+                              else if(val.length<8){
+                                return "Password should contain at least 8 characters";
+                              }
+                              return null;
+                            },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
+                         SizedBox(height: 20.0),
+                        Container(
+                          child: TextFormField(
+                            controller: passwordConfirmController,
+                            obscureText: true,
+                            decoration: ThemeHelper().textInputDecoration(
+                                "Confirm password*", "Confirm your password"),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please confirm your password";
+                              }
+                              else if(val.length<8){
+                                return "Password should contain at least 8 characters";
                               }
                               return null;
                             },
@@ -284,30 +284,36 @@ class MyCustomFormState extends State<SignUp> {
         ),
       ),
     );
-  }
+  }  
+  // "address_set":[{
+  //             "latitude":43.238949,
+  //             "longitude":76.889709,
+  //             "text_address":addressController.text,
+  //             "comment":addressController.text,
+  //             }],
 
   Future <void> login() async {
-    if(passwordController.text.isNotEmpty && usernameController.text.isNotEmpty){
+    if(
+        passwordController.text.isNotEmpty && 
+        passwordController.text == passwordConfirmController.text &&
+        usernameController.text.isNotEmpty
+        ){
 
      var response =  await http.post(
-          Uri.parse("https://cors-anywhere.herokuapp.com/https://fast-cliffs-74827.herokuapp.com/api/users/"),
+          Uri.parse("https://cors-anywhere.herokuapp.com/http://thawing-taiga-45359.herokuapp.com/api/users/"),
           headers: { 
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Access-Control-Allow-Origin': '*'
           }, 
           body: jsonEncode({
-            "username":usernameController.text,
-            "password":passwordController.text,
-            "address_set":[{
-              "latitude":43.238949,
-              "longitude":76.889709,
-              "text_address":addressController.text,
-              "comment":addressController.text,
-              }]
+            "username": usernameController.text,
+            "password": passwordController.text,
+            "first_name":firstnameController.text,
+            "last_name": lastnameController.text
           })
       );
-      if(response.statusCode==200){
+      if(response.statusCode==201){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserProfile()));
       }
       else{
