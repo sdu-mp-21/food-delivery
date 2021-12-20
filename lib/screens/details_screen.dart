@@ -1,8 +1,10 @@
+import 'package:delivery_app/models/cart_model.dart';
 import 'package:delivery_app/models/menu_item_model.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   // const DetailScreen({Key? key}) : super(key: key);
@@ -72,6 +74,7 @@ class MenuItemContainer extends StatefulWidget {
 class _MenuItemContainerState extends State<MenuItemContainer> {
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return InkWell(
       onTap: (){
         showModalBottomSheet(context: context, builder: (context){
@@ -120,7 +123,15 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                         SizedBox(height: 20),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: TextButton(onPressed: (){}, child: Padding(
+                          child: TextButton(onPressed: (){
+                            cart.addItem(widget.menuItem.id.toString(), widget.menuItem.name, widget.menuItem.price);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    duration: Duration(seconds: 1),
+                                    content: Text("Item added to cart")
+                                ));
+                            Navigator.of(context).pop();
+                          }, child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
