@@ -1,8 +1,6 @@
-import 'package:delivery_app/screens/forgot_password.dart';
-import 'package:delivery_app/screens/forgot_password_verification.dart';
+import 'package:delivery_app/screens/cart_screen.dart';
+
 import 'package:delivery_app/screens/home_screen.dart';
-import 'package:delivery_app/screens/sign_in.dart';
-import 'package:delivery_app/screens/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,24 +39,21 @@ class _ProfilePageState extends State<UserProfile>{
         ),
         actions: [
           Container(
-            margin: EdgeInsets.only( top: 16, right: 16,),
+            margin: EdgeInsets.only(
+              top: 16,
+              right: 16,
+            ),
             child: Stack(
               children: <Widget>[
-                Icon(Icons.shopping_cart),
                 GestureDetector(
                   onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
-                  }, 
-                  child: Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: BoxDecoration( color: Colors.red, borderRadius: BorderRadius.circular(6),),
-                    constraints: BoxConstraints( minWidth: 12, minHeight: 12, ),
-                    child: Text( '1', style: TextStyle(color: Colors.white, fontSize: 8,), textAlign: TextAlign.center,),
-                  ),
-                ),)
-                
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CartScreen()),
+                    );
+                  },
+                  child: Icon(Icons.shopping_cart),
+                )
               ],
             ),
           )
@@ -66,17 +61,18 @@ class _ProfilePageState extends State<UserProfile>{
       ),
       drawer: Drawer(
         child: Container(
-          decoration:BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [0.0, 1.0],
+                  stops: [
+                    0.0,
+                    1.0
+                  ],
                   colors: [
                     Theme.of(context).primaryColor.withOpacity(0.2),
                     Theme.of(context).accentColor.withOpacity(0.5),
-                  ]
-              )
-          ) ,
+                  ])),
           child: ListView(
             children: [
               DrawerHeader(
@@ -86,58 +82,82 @@ class _ProfilePageState extends State<UserProfile>{
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [0.0, 1.0],
-                    colors: [ Theme.of(context).primaryColor,Theme.of(context).accentColor,],
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).accentColor,
+                    ],
                   ),
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: Text('Food Delivery',
-                    style: TextStyle(fontSize: 25,color: Colors.white, fontWeight: FontWeight.bold),
+                  child: Text(
+                    'Food Delivery',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-               ListTile(
-                leading: Icon(Icons.shopping_bag_rounded ,size: _drawerIconSize,color: Colors.grey.shade800),
-                title: Text('Food List', style: TextStyle(fontSize: _drawerFontSize, color: Colors.grey.shade800),
+              ListTile(
+                leading: Icon(Icons.no_food_outlined,
+                    size: _drawerIconSize, color: Colors.grey.shade800),
+                title: Text(
+                  'Food List',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize, color: Colors.grey.shade800),
                 ),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.login_rounded,size: _drawerIconSize,color: Colors.grey.shade800),
-                title: Text('Login Page', style: TextStyle(fontSize: _drawerFontSize, color: Colors.grey.shade800),
+                leading: Icon(Icons.shopping_bag_rounded,
+                    size: _drawerIconSize, color: Colors.grey.shade800),
+                title: Text(
+                  'My Orders',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize, color: Colors.grey.shade800),
                 ),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartScreen()),
+                  );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.person_add_alt_1, size: _drawerIconSize,color: Colors.grey.shade800),
-                title: Text('Registration Page',style: TextStyle(fontSize: _drawerFontSize,color: Colors.grey.shade800),),
+                leading: Icon(Icons.account_circle_rounded,
+                    size: _drawerIconSize, color: Colors.grey.shade800),
+                title: Text(
+                  'Profile',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize, color: Colors.grey.shade800),
+                ),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>SignUp()),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfile()),
+                  );
                 },
               ),
+
               ListTile(
-                leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Colors.grey.shade800,),
-                title: Text('Forgot Password Page',style: TextStyle(fontSize: _drawerFontSize,color: Colors.grey.shade800),),
+                leading: Icon(
+                  Icons.logout_rounded,
+                  size: _drawerIconSize,
+                  color: Colors.grey.shade800,
+                ),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize, color: Colors.grey.shade800),
+                ),
                 onTap: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPassword()),);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Colors.grey.shade800,),
-                title: Text('Verification Page',style: TextStyle(fontSize: _drawerFontSize,color: Colors.grey.shade800),),
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPasswordVerification()), );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.logout_rounded, size: _drawerIconSize,color: Colors.grey.shade800,),
-                title: Text('Logout',style: TextStyle(fontSize: _drawerFontSize,color: Colors.grey.shade800),),
-                onTap: () {
-                 // SystemNavigator.pop();
+                  // SystemNavigator.pop();
                 },
               ),
             ],
