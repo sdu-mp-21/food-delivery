@@ -146,7 +146,7 @@ class MyCustomFormState extends State<SignIn> {
     if(passwordController.text.isNotEmpty && usernameController.text.isNotEmpty){
 
      var response =  await http.post(
-          Uri.parse("https://cors-anywhere.herokuapp.com/http://thawing-taiga-45359.herokuapp.com/api/token-auth/"),
+          Uri.parse("http://thawing-taiga-45359.herokuapp.com/api/token-auth/"),
           headers: { 
             'Content-type': 'application/json',
             'Accept': 'application/json',

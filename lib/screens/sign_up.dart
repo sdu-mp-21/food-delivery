@@ -300,7 +300,7 @@ class MyCustomFormState extends State<SignUp> {
         ){
 
      var response =  await http.post(
-          Uri.parse("https://cors-anywhere.herokuapp.com/http://thawing-taiga-45359.herokuapp.com/api/users/"),
+          Uri.parse("http://thawing-taiga-45359.herokuapp.com/api/users/"),
           headers: { 
             'Content-type': 'application/json',
             'Accept': 'application/json',
