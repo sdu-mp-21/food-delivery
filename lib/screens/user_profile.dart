@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:delivery_app/models/data_model.dart';
+import 'package:delivery_app/screens/cart_screen.dart';
 import 'package:delivery_app/screens/forgot_password.dart';
 import 'package:delivery_app/screens/forgot_password_verification.dart';
 import 'package:delivery_app/screens/home_screen.dart';
