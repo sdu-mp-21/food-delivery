@@ -24,7 +24,7 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
     NetworkHelper networkHelper = NetworkHelper(
         url:
-            "https://fast-cliffs-74827.herokuapp.com/api/restaurants/${widget.restaurant.id}/?format=json");
+            "http://thawing-taiga-45359.herokuapp.com/api/restaurants/${widget.restaurant.id}/?format=json");
     networkHelper.getMenu().then((value) {
       setState(() {
         _menuItemsList.addAll(value);
@@ -92,7 +92,6 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                             image: NetworkImage(widget.menuItem.imageUrl),
                             fit: BoxFit.cover,
                           ),
-                          color: Colors.grey,
                         ),
                       ]),
                   Padding(
@@ -178,7 +177,6 @@ class _MenuItemContainerState extends State<MenuItemContainer> {
                 ),
 
               ),
-              color: Colors.grey,
             ),
             SizedBox(width: 20),
             Column(
