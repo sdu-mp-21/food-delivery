@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:delivery_app/models/data_model.dart';
 import 'package:delivery_app/screens/forgot_password.dart';
 import 'package:delivery_app/screens/forgot_password_verification.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/sign_in.dart';
 import 'package:delivery_app/screens/sign_up.dart';
+import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery_app/components/header_widget.dart';
+import 'package:http/http.dart' as http;
+
 
 class UserProfile extends StatefulWidget{
 
@@ -15,11 +21,24 @@ class UserProfile extends StatefulWidget{
      return _ProfilePageState();
   }
 }
-
+  
 class _ProfilePageState extends State<UserProfile>{
 
   double  _drawerIconSize = 24;
   double _drawerFontSize = 17;
+  DataItem _data = {} as DataItem;
+  
+    void initState() {
+    super.initState();
+    NetworkHelper networkHelper = NetworkHelper(
+        url:"http://thawing-taiga-45359.herokuapp.com/api/users/4/");
+    networkHelper.getData().then((value) {
+      setState(() {
+        _data = value;
+      });
+      print(value);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +186,9 @@ class _ProfilePageState extends State<UserProfile>{
                     child: Icon(Icons.person, size: 80, color: Colors.grey.shade300,),
                   ),
                   SizedBox(height: 20,),
-                  Text('Username', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                  Text(_data.first_name, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
-                  Text('User', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text(_data.username, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(height: 10,),
                   Container(
                     padding: EdgeInsets.all(10),
@@ -222,5 +241,5 @@ class _ProfilePageState extends State<UserProfile>{
       ),
     );
   }
-
+  
 }
