@@ -59,22 +59,6 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeSingleItem(String id) {
-    if (!_items.containsKey(id)) {
-      return;
-    }
-    if (_items[id]!.quantity > 1) {
-      _items.update(
-          id,
-              (existingCartItem) => CartItem(
-              id: DateTime.now().toString(),
-              name: existingCartItem.name,
-              quantity: existingCartItem.quantity - 1,
-              price: existingCartItem.price));
-    }
-    notifyListeners();
-  }
-
   int get totalAmount {
     var total = 0;
     _items.forEach((key, cartItem) {

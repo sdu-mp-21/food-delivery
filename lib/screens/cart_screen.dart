@@ -15,52 +15,58 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
 
-  // Future<void> placeOrder(
-  //     List<CartItem> items,
-  //     int foodPrice,
-  //     int deliveryPrice,
-  //     int personsCount,
-  //     int restaurant,
-  //     int user,
-  //     int address) async{
-  //
-  //   var response =  await http.post(
-  //       Uri.parse("http://thawing-taiga-45359.herokuapp.com/api/orders/"),
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //         'Accept': 'application/json',
-  //       },
-  //       body: jsonEncode(<String, dynamic>{
-  //         "foods_price": foodPrice,
-  //         "delivery_price": deliveryPrice,
-  //         "persons_count": personsCount,
-  //         "restaurant": restaurant,
-  //         "user": user,
-  //         "address": address,
-  //         "orderfood_set": items.map((food) => {
-  //           "title": food.name,
-  //           "dish_price": food.price,
-  //           "total_amount": (food.price * food.quantity),
-  //           "count": food.quantity,
-  //           "order": 1,
-  //         }),
-  //       })
-  //   );
-  //   if(response.statusCode==201){
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //             duration: Duration(seconds: 1),
-  //             content: Text("Order placed successfully")
-  //         ));
-  //   }
-  //   else{
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //             duration: Duration(seconds: 1),
-  //             content: Text("Error accured")
-  //         ));
-  //   }
-  // }
+  Future<void> placeOrder(
+      List<CartItem> items,
+      int foodPrice,
+      int deliveryPrice,
+      int personsCount,
+      int restaurant,
+      int user,
+      int address) async{
+
+    List<Map<String, String>> food_set = [];
+    items.forEach((food) {
+      food_set.add({
+        "title": food.name.toString(),
+        "dish_price": food.price.toString(),
+        "total_amount": (food.price * food.quantity).toString(),
+        "count": food.quantity.toString(),
+        "order": '1',
+      });
+    });
+
+    var response =  await http.post(
+        Uri.parse("http://thawing-taiga-45359.herokuapp.com/api/orders/"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode(<String, dynamic>{
+          "foods_price": foodPrice,
+          "delivery_price": deliveryPrice,
+          "persons_count": personsCount,
+          "restaurant": restaurant,
+          "user": user,
+          "address": address,
+          "orderfood_set": json.encode(food_set),
+        })
+    );
+    print(response.body);
+    if(response.statusCode==201){
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              duration: Duration(seconds: 1),
+              content: Text("Order placed successfully")
+          ));
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              duration: Duration(seconds: 1),
+              content: Text("Error accured")
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,97 +113,106 @@ class _CartScreenState extends State<CartScreen> {
                   shrinkWrap: true,
                  itemCount: cart.items.length,
                   itemBuilder: (context, i){
-                    return Container(
-                      width: MediaQuery.of(context).size.width-40,
-                      height: 100,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              image: DecorationImage(
-                                image: NetworkImage("https://rb.gy/ib6ugd"),
-                                fit: BoxFit.cover,
+                    return Dismissible(
+                      background: Container(
+                        color: Colors.red,
+                      ),
+                      key: ValueKey<String>(cart.items.values.toList()[i].id),
+                      onDismissed: (DismissDirection direction) {
+                        cart.removeItem(cart.items.values.toList()[i].id);
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width-40,
+                        height: 100,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                image: DecorationImage(
+                                  image: NetworkImage("https://bit.ly/3FfFeoB"),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                              borderRadius: BorderRadius.circular(20.0),
                             ),
-                          ),
-                          SizedBox(width: 20),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 100.0,
-                                child: Text(
-                                  cart.items.values.toList()[i].name,
-                                  style: TextStyle(fontWeight: FontWeight.bold),),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () { cart.decreaseQuantity(cart.items.values.toList()[i].id); },
-                                    child: Container(
-                                      width: 20.0,
-                                      height: 20.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(4.0),
-                                      ),
-                                      child: Icon(
-                                        Icons.remove,
-                                        color: Colors.white,
-                                        size: 15.0,
+                            SizedBox(width: 20),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 100.0,
+                                  child: Text(
+                                    cart.items.values.toList()[i].name,
+                                    style: TextStyle(fontWeight: FontWeight.bold),),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () { cart.decreaseQuantity(cart.items.values.toList()[i].id); },
+                                      child: Container(
+                                        width: 20.0,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(4.0),
+                                        ),
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: Colors.white,
+                                          size: 15.0,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Text(
-                                      cart.items.values.toList()[i].quantity.toString(),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                      child: Text(
+                                        cart.items.values.toList()[i].quantity.toString(),
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        cart.increaseQuantity(cart.items.values.toList()[i].id);
+                                        },
+                                      child: Container(
+                                        width: 20.0,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue[300],
+                                          borderRadius: BorderRadius.circular(4.0),
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 15.0,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 80,
+                                    ),
+                                    Text(
+                                      "${cart.items.values.toList()[i].price * cart.items.values.toList()[i].quantity}T",
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      cart.increaseQuantity(cart.items.values.toList()[i].id);
-                                      },
-                                    child: Container(
-                                      width: 20.0,
-                                      height: 20.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue[300],
-                                        borderRadius: BorderRadius.circular(4.0),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                        size: 15.0,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 80,
-                                  ),
-                                  Text(
-                                    "${cart.items.values.toList()[i].price * cart.items.values.toList()[i].quantity}T",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
 
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
 
@@ -281,14 +296,15 @@ class _CartScreenState extends State<CartScreen> {
               Center(
                 child: MaterialButton(
                     onPressed: (){
-                      // placeOrder(
-                      //     cart.items.values.toList(),
-                      //     cart.totalAmount,
-                      //     500,
-                      //     2,
-                      //     2,
-                      //     4,
-                      //     1);
+                      placeOrder(
+                          cart.items.values.toList(),
+                          cart.totalAmount,
+                          500,
+                          2,
+                          2,
+                          4,
+                          1);
+                      cart.clear();
                     },
                     color: Colors.deepOrange,
                     height: 50.0,

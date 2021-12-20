@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   NetworkHelper networkHelper = NetworkHelper(
       url:
-          "http://fast-cliffs-74827.herokuapp.com/api/restaurants/?format=json");
+          "http://thawing-taiga-45359.herokuapp.com/api/restaurants/?format=json");
   List<Restaurant> _restaurantsList = [];
 
   List<Address> userAddresses = [
@@ -328,14 +328,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       SliderBannerItem(imageUrl: "https://bit.ly/32mO0Td"),
                       SliderBannerItem(imageUrl: "https://bit.ly/3DymC2d"),
                     ]),
-                    /*SlideTransition(
-                      position: offset,
-                      child: Row(children: [
-                        SliderBannerItem(imageUrl: "https://bit.ly/3bPkuH2"),
-                        SliderBannerItem(imageUrl: "https://bit.ly/32mO0Td"),
-                        SliderBannerItem(imageUrl: "https://bit.ly/3DymC2d"),
-                      ]),
-                    ),*/
                   ),
                 ),
                 SizedBox(height: 20),
@@ -494,7 +486,6 @@ class SliderRestaurantCard extends StatelessWidget {
                         //NetworkImage("https://rb.gy/ib6ugd"),
                         fit: BoxFit.cover,
                       ),
-                      color: Colors.grey,
                     ),
 
                     //working hours
