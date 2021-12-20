@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-u2s57b)z$_8elq2&in&vt2(qh_q6ieu*pcpr(qxcr4bcj3qsb%
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1', 'fast-cliffs-74827.herokuapp.com'
+    'localhost', '127.0.0.1', 'thawing-taiga-45359.herokuapp.com'
 ]
 
 
