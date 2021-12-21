@@ -4,6 +4,7 @@ import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:delivery_app/screens/cart_screen.dart';
 import 'package:delivery_app/screens/details_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
+import 'package:delivery_app/screens/orders_screen.dart';
 import 'package:delivery_app/screens/restaurants_list_screen.dart';
 import 'package:delivery_app/screens/user_profile.dart';
 import 'package:delivery_app/services/network_helper.dart';
@@ -181,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
+                      MaterialPageRoute(builder: (context) => OrderScreen()),
                     );
                   },
                 ),
