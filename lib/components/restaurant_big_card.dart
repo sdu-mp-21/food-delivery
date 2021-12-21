@@ -38,7 +38,6 @@ class RestaurantBigCard extends StatelessWidget {
                     //NetworkImage("https://rb.gy/ib6ugd"),
                     fit: BoxFit.cover,
                   ),
-                  color: Colors.grey,
                 ),
                 Container(
                   child: Padding(

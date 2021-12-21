@@ -5,13 +5,10 @@ import 'package:delivery_app/screens/cart_screen.dart';
 import 'package:delivery_app/screens/details_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/restaurants_list_screen.dart';
+import 'package:delivery_app/screens/user_profile.dart';
 import 'package:delivery_app/services/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:delivery_app/screens/forgot_password.dart';
-import 'package:delivery_app/screens/forgot_password_verification.dart';
-import 'package:delivery_app/screens/sign_in.dart';
-import 'package:delivery_app/screens/sign_up.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,17 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   NetworkHelper networkHelper = NetworkHelper(
       url:
-          "http://fast-cliffs-74827.herokuapp.com/api/restaurants/?format=json");
+          "http://thawing-taiga-45359.herokuapp.com/api/restaurants/?format=json");
   List<Restaurant> _restaurantsList = [];
 
-  List<Address> userAddresses=[
+  List<Address> userAddresses = [
     Address(latitude: 34, longitude: 70, text_address: 'No Address')
   ];
 
   void updateInformation(Address newAddress) {
     setState(() {
       userAddresses.add(newAddress);
-      
     });
   }
 
@@ -45,22 +41,26 @@ class _HomeScreenState extends State<HomeScreen> {
     final Address userAdress = await Navigator.push(
       context,
       CupertinoPageRoute(
-          fullscreenDialog: true, builder: (context) => MapScreen(_restaurantsList)),
+          fullscreenDialog: true,
+          builder: (context) => MapScreen(_restaurantsList)),
     );
     updateInformation(userAdress);
   }
 
-  List<DropdownMenuItem<String>> get dropdownItems{
+  List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text('address'),value: 'address'),
+      DropdownMenuItem(child: Text('address'), value: 'address'),
     ];
     userAddresses.forEach((address) {
       menuItems.add(
-      DropdownMenuItem(child: Text(address.text_address),value: address.text_address),
-    );});
+        DropdownMenuItem(
+            child: Text(address.text_address), value: address.text_address),
+      );
+    });
 
     return menuItems;
   }
+
   var selectedValue = 'No Address';
 
   @override
@@ -77,66 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Home",
-            style: TextStyle(color: Colors.white),
-          ),
-          elevation: 0.5,
-          iconTheme: IconThemeData(color: Colors.white),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
+      title: Text(
+        "Home",
+        style: TextStyle(color: Colors.white),
+      ),
+      elevation: 0.5,
+      iconTheme: IconThemeData(color: Colors.white),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
                   Theme.of(context).primaryColor,
                   Theme.of(context).accentColor,
                 ])),
+      ),
+      actions: [
+        Container(
+          margin: EdgeInsets.only(
+            top: 16,
+            right: 16,
           ),
-          actions: [
-            Container(
-              margin: EdgeInsets.only(
-                top: 16,
-                right: 16,
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Icon(Icons.shopping_cart),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CartScreen()),
-                      );
-                    },
-                    child: Positioned(
-                      right: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
-                        ),
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+          child: Stack(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartScreen()),
+                  );
+                },
+                child: Icon(Icons.shopping_cart),
+              )
+            ],
+          ),
+        )
+      ],
+    ),
         drawer: Drawer(
           child: Container(
             decoration: BoxDecoration(
@@ -178,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.shopping_bag_rounded,
+                  leading: Icon(Icons.no_food_outlined,
                       size: _drawerIconSize, color: Colors.grey.shade800),
                   title: Text(
                     'Food List',
@@ -208,72 +186,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.login_rounded,
+                  leading: Icon(Icons.account_circle_rounded,
                       size: _drawerIconSize, color: Colors.grey.shade800),
                   title: Text(
-                    'Login Page',
+                    'Profile',
                     style: TextStyle(
                         fontSize: _drawerFontSize, color: Colors.grey.shade800),
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignIn()),
+                      MaterialPageRoute(builder: (context) => UserProfile()),
                     );
                   },
                 ),
-                ListTile(
-                  leading: Icon(Icons.person_add_alt_1,
-                      size: _drawerIconSize, color: Colors.grey.shade800),
-                  title: Text(
-                    'Registration Page',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize, color: Colors.grey.shade800),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUp()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.password_rounded,
-                    size: _drawerIconSize,
-                    color: Colors.grey.shade800,
-                  ),
-                  title: Text(
-                    'Forgot Password Page',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize, color: Colors.grey.shade800),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ForgotPassword()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.verified_user_sharp,
-                    size: _drawerIconSize,
-                    color: Colors.grey.shade800,
-                  ),
-                  title: Text(
-                    'Verification Page',
-                    style: TextStyle(
-                        fontSize: _drawerFontSize, color: Colors.grey.shade800),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ForgotPasswordVerification()),
-                    );
-                  },
-                ),
+
                 ListTile(
                   leading: Icon(
                     Icons.logout_rounded,
@@ -322,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // }
                     // ).toList(),
 
-                    onChanged: (String? newValue){
+                    onChanged: (String? newValue) {
                       setState(() {
                         selectedValue = newValue!;
                       });
@@ -364,10 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               border: InputBorder.none,
                               prefixIcon: Icon(Icons.search),
                               hintText: "Search restaurant",
-                              hintStyle:
-                              TextStyle(color: Color(0xFFB6B7B7), fontSize: 18)
-                          )
-                      ),
+                              hintStyle: TextStyle(
+                                  color: Color(0xFFB6B7B7), fontSize: 18))),
                       suggestionsCallback: (pattern) => _restaurantsList.where(
                           (item) => item.name
                               .toLowerCase()
@@ -403,14 +328,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       SliderBannerItem(imageUrl: "https://bit.ly/32mO0Td"),
                       SliderBannerItem(imageUrl: "https://bit.ly/3DymC2d"),
                     ]),
-                    /*SlideTransition(
-                      position: offset,
-                      child: Row(children: [
-                        SliderBannerItem(imageUrl: "https://bit.ly/3bPkuH2"),
-                        SliderBannerItem(imageUrl: "https://bit.ly/32mO0Td"),
-                        SliderBannerItem(imageUrl: "https://bit.ly/3DymC2d"),
-                      ]),
-                    ),*/
                   ),
                 ),
                 SizedBox(height: 20),
@@ -565,10 +482,10 @@ class SliderRestaurantCard extends StatelessWidget {
                     Container(
                       height: 120.0,
                       child: Ink.image(
-                        image: NetworkImage(restaurant.imageUrl),//NetworkImage("https://rb.gy/ib6ugd"),
+                        image: NetworkImage(restaurant.imageUrl),
+                        //NetworkImage("https://rb.gy/ib6ugd"),
                         fit: BoxFit.cover,
                       ),
-                      color: Colors.grey,
                     ),
 
                     //working hours
