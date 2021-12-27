@@ -23,15 +23,7 @@ and backend is written in Python(Django). Google maps, geocoding was included to
 By these technologies the application shows the location of restaurants in google maps.
 
 # Screenshots
-<img src="https://user-images.githubusercontent.com/60817450/147446398-519590b3-2dbd-4873-9ff3-9d263c367aa6.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446395-298d2439-5799-45c8-a018-b66e2f8afa0b.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446393-4c4182ee-444a-4eda-96cf-c91c5dc710c4.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446391-0f026750-7d3d-4526-89c4-9f363372bc1c.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446386-6da672fd-6dd5-4998-bcc1-215706518fb8.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446383-24389160-3a6e-4d2e-82c0-70db033db627.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446380-e61e43f6-d171-4411-905f-8b7dc2e6afde.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446401-ccca1788-b1c7-4bc5-ba44-1d8948e1eb9e.jpeg" width="200" height="400">
-<img src="https://user-images.githubusercontent.com/60817450/147446400-81078fc3-728a-4d6c-9e43-ea129eecc504.jpeg" width="200" height="400">
+<img src="https://user-images.githubusercontent.com/60817450/147446398-519590b3-2dbd-4873-9ff3-9d263c367aa6.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446395-298d2439-5799-45c8-a018-b66e2f8afa0b.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446393-4c4182ee-444a-4eda-96cf-c91c5dc710c4.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446391-0f026750-7d3d-4526-89c4-9f363372bc1c.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446386-6da672fd-6dd5-4998-bcc1-215706518fb8.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446383-24389160-3a6e-4d2e-82c0-70db033db627.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446380-e61e43f6-d171-4411-905f-8b7dc2e6afde.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446401-ccca1788-b1c7-4bc5-ba44-1d8948e1eb9e.jpeg" width="200" height="400"><img src="https://user-images.githubusercontent.com/60817450/147446400-81078fc3-728a-4d6c-9e43-ea129eecc504.jpeg" width="200" height="400">
 
 ## Technologies
 ***
