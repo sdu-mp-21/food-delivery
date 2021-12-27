@@ -7,10 +7,10 @@ A simple application that demonstrates food and their location with delivery.
 # Mentor
 Bissenbay Dauletbayev - b.dauletbayev@sdu.edu.kz
 # Team Members
-190103335 - Nurbakyt Akhmetshaiykov
-180103184 - Sungkar Daulet
-190103248 - Rimma Bilimova
-190103248 - Zhannur Karim
+- 190103335 - Nurbakyt Akhmetshaiykov
+- 180103184 - Sungkar Daulet
+- 190103248 - Rimma Bilimova
+- 190103248 - Zhannur Karim
 
 # Structure of App
 There is three main models: restaurant, cart, menuitems. Restaurants created in admin pannel, each restaurant has their own menu with food list. User can register or login and see list of restaurants and then view menu and add foods to cart and then make order. Furthermore user can selet it's own location in map and it will return text address of that place.
@@ -41,9 +41,9 @@ A list of technologies used within the project:
 ## Installation
 ***
 
-$ git clone https://github.com/sdu-mp-21/food-delivery.git fileName
-$ cd fileName
-$ flutter pub get
-$ flutter run 
+- $ git clone https://github.com/sdu-mp-21/food-delivery.git fileName
+- $ cd fileName
+- $ flutter pub get
+- $ flutter run 
 
 To update when the application is running enter: 'r' or 'R'
