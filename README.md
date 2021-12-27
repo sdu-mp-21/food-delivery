@@ -1,5 +1,5 @@
 # Final project
-It's our project for CSS 216 made using Flutter and Python Django
+It's our project for CSS 223 made using Flutter and Python Django
 
 # Food Delivery
 A simple application that demonstrates food and their location with delivery.
@@ -23,7 +23,7 @@ and backend is written in Python(Django). Google maps, geocoding was included to
 By these technologies the application shows the location of restaurants in google maps.
 
 # Screenshots
-![photo1640589734 (6)](https://user-images.githubusercontent.com/60817450/147446380-e61e43f6-d171-4411-905f-8b7dc2e6afde.jpeg)
+![photo1640589734 (6)](https://user-images.githubusercontent.com/60817450/147446380-e61e43f6-d171-4411-905f-8b7dc2e6afde.jpeg width="400" height="790")
 ![photo1640589734 (5)](https://user-images.githubusercontent.com/60817450/147446383-24389160-3a6e-4d2e-82c0-70db033db627.jpeg)
 ![photo1640589734 (4)](https://user-images.githubusercontent.com/60817450/147446386-6da672fd-6dd5-4998-bcc1-215706518fb8.jpeg)
 ![photo1640589734 (3)](https://user-images.githubusercontent.com/60817450/147446391-0f026750-7d3d-4526-89c4-9f363372bc1c.jpeg)
