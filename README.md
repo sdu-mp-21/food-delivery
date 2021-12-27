@@ -23,6 +23,7 @@ and backend is written in Python(Django). Google maps, geocoding was included to
 By these technologies the application shows the location of restaurants in google maps.
 
 # Screenshots
+<img src="https://user-images.githubusercontent.com/60817450/147446398-519590b3-2dbd-4873-9ff3-9d263c367aa6.jpeg" width="100" height="200">
 ![photo1640589734 (6)](https://user-images.githubusercontent.com/60817450/147446380-e61e43f6-d171-4411-905f-8b7dc2e6afde.jpeg?v=4&s=200)
 ![photo1640589734 (5)](https://user-images.githubusercontent.com/60817450/147446383-24389160-3a6e-4d2e-82c0-70db033db627.jpeg?v=4&s=200)
 ![photo1640589734 (4)](https://user-images.githubusercontent.com/60817450/147446386-6da672fd-6dd5-4998-bcc1-215706518fb8.jpeg)
