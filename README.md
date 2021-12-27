@@ -1,8 +1,5 @@
-# Final project
+# Final project (Food Delivery)
 It's our project for CSS 223 made using Flutter and Python Django
-
-# Food Delivery
-A simple application that demonstrates food and their location with delivery.
 
 # Mentor
 Bissenbay Dauletbayev - b.dauletbayev@sdu.edu.kz
