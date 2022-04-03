@@ -20,8 +20,12 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'list':
-            return Restaurant.objects.prefetch_related(
+            queryset = Restaurant.objects.prefetch_related(
                 'schedule_set'
             ).select_related('address', 'paymentmethods').all()
+            category = self.request.query_params.get('category')
+            if category:
+                return queryset.filter(categories__id=category)
+            return queryset
         elif self.action == 'retrieve':
             return Restaurant.objects.select_related().prefetch_related().all()

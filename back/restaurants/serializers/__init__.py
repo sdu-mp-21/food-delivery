@@ -4,9 +4,11 @@ from .address import Address
 from .payment_methods import PaymentMethodsSerializer
 from .schedule import ScheduleSerializer
 from .food import FoodSerializer
+from .cateory import CategorySerializer
 
 
 __all__ = (
     'RetrieveRestaurantSerializer', 'Address', 'PaymentMethodsSerializer',
     'ScheduleSerializer', 'FoodSerializer', 'ListRestaurantSerializer',
+    'CategorySerializer',
 )

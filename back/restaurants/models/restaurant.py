@@ -1,3 +1,5 @@
+from .category import Category
+
 from django.db import models
 
 
@@ -7,3 +9,4 @@ class Restaurant(models.Model):
     image = models.ImageField(
         upload_to='restaurants_logo', null=True, blank=True
     )
+    categories = models.ManyToManyField(Category)

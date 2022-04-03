@@ -1,4 +1,6 @@
-from .models import Address, PaymentMethods, Restaurant, Schedule, Food
+from .models import (
+    Address, PaymentMethods, Restaurant, Schedule, Food, Category,
+)
 
 from django.contrib import admin
 
@@ -33,7 +35,20 @@ class FoodInline(admin.TabularInline):
     model = Food
 
 
+class CategoryInline(admin.TabularInline):
+    model = Restaurant.categories.through
+    extra = 0
+
+
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
-    inlines = [AddressInline, PaymentMethodsInline, ScheduleInline, FoodInline]
+    inlines = [
+        AddressInline, PaymentMethodsInline, ScheduleInline, FoodInline,
+        CategoryInline,
+    ]
     exclude = ('rating',)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    pass

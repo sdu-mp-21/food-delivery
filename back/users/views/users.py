@@ -10,14 +10,14 @@ from rest_framework.response import Response
 
 from django.contrib.auth.models import User
 
-from users.serializers import UserSerializer, CreateUserSerializer
+from users.serializers import UserSerializer, GetOrCreateTokenSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    create_serializer_class = CreateUserSerializer
     authentication_classes = [SessionAuthentication, TokenAuthentication]
+    http_method_names = ['get', 'patch']
 
     @action(detail=False, methods=['get'])
     def get_user(self, request):
@@ -26,9 +26,3 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
-    def get_serializer_class(self):
-        if self.action == 'create':
-            return self.create_serializer_class
-        else:
-            return self.serializer_class
