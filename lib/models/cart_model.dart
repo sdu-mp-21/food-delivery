@@ -19,6 +19,13 @@ class CartItem {
   void setQuantity(int i) {
    this.quantity = i;
   }
+
+  Map<String, dynamic> toJson() => {
+    "title": name,
+    "dish_price": price,
+    "total_amount": (price * quantity),
+    "count": quantity,
+    "order": 1,};
 }
 
 class Cart with ChangeNotifier {

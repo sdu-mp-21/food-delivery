@@ -1,5 +1,6 @@
 import 'package:delivery_app/models/data_model.dart';
 import 'package:delivery_app/models/menu_item_model.dart';
+import 'package:delivery_app/models/order_model.dart';
 import 'package:delivery_app/models/restaurant_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -44,6 +45,22 @@ class NetworkHelper {
       menusJson = json.decode(response.body); 
       }
     return menusJson;
+  }
+
+  Future<List<Order>> getOrders() async{
+    var response = await http.get(Uri.parse(url));
+
+    if(response.statusCode ==200){
+      List<Order> orderList=[];
+      var ordersJson = json.decode(response.body);
+      for(var orderJson in ordersJson){
+        orderList.add(Order.fromJson(orderJson));
+      }
+      //List<Restaurant> restaurantList = List.generate(restaurantsJson.length, (i) => Restaurant.fromJson(restaurantsJson[i]));
+      return orderList;
+    }else{
+      throw Exception('Failed to load orders');
+    }
   }
 
   //  //url = "https://fast-cliffs-74827.herokuapp.com/api/restaurants/?format=json";

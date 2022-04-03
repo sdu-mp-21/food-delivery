@@ -15,6 +15,12 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
 
+  List encondeToJson(List<CartItem> list) {
+    List jsonList = [];
+    list.map((item) => jsonList.add(item.toJson())).toList();
+    return jsonList;
+  }
+
   Future<void> placeOrder(
       List<CartItem> items,
       int foodPrice,
@@ -23,17 +29,13 @@ class _CartScreenState extends State<CartScreen> {
       int restaurant,
       int user,
       int address) async{
-
-    List<Map<String, String>> food_set = [];
+    List<CartItem> list=[];
     items.forEach((food) {
-      food_set.add({
-        "title": food.name.toString(),
-        "dish_price": food.price.toString(),
-        "total_amount": (food.price * food.quantity).toString(),
-        "count": food.quantity.toString(),
-        "order": '1',
-      });
+
+      list.add(food);
     });
+    var finalJson = {"orderfood_set": encondeToJson(list)};
+    print(finalJson);
 
     var response =  await http.post(
         Uri.parse("http://thawing-taiga-45359.herokuapp.com/api/orders/"),
@@ -48,10 +50,10 @@ class _CartScreenState extends State<CartScreen> {
           "restaurant": restaurant,
           "user": user,
           "address": address,
-          "orderfood_set": json.encode(food_set),
+          "orderfood_set": encondeToJson(list),
         })
     );
-    print(response.body);
+    print(json.decode(response.body));
     if(response.statusCode==201){
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
